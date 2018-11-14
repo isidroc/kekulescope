@@ -1,38 +1,4 @@
 from __future__ import division, print_function
-import torch
-from profilehooks import profile
-from sklearn.metrics import mean_squared_error
-from math import sqrt
-import torch.nn as nn
-import torch.optim as optim
-from torch.optim import lr_scheduler
-import torchvision
-from torchvision import datasets, models, args.data_augmentations
-import os, glob, time
-import copy
-import joblib, sys
-import numpy as np
-import scipy
-from scipy import stats
-from scipy import spatial
-import os,sys, os.path
-from collections import defaultdict
-import rdkit
-from rdkit import Chem
-from rdkit.Chem import AllChem
-import rdkit.rdBase
-from rdkit import DataStructs
-from rdkit.DataStructs import BitVectToText
-from rdkit import DataStructs
-from rdkit import Chem
-from rdkit.Chem.Draw import IPythonConsole
-from IPython.display import SVG
-import IPython
-#IPython.core.display.set_matplotlib_formats('svg')
-from IPython.core.display import SVG
-from torch.autograd import Variable
-import multiprocessing
-
 #args.cell_line = sys.argv[1]
 #args.seed = int(sys.argv[2])
 #args.task=sys.argv[3]
@@ -41,7 +7,7 @@ import multiprocessing
 #args.step_size_lr_decay = int(sys.argv[6])
 #args.drop_factor_lr = float(sys.argv[7])
 #args.batch_size = int(sys.argv[8])
-#args.data_augmentation=int(sys.argv[9])
+#data_augmentation=int(sys.argv[9])
 #args.args.nb_epochs_training_per_cycle=int(sys.argv[10])
 #args.nb_epochs_training=int(sys.argv[11])
 #seed = args.seed
@@ -74,10 +40,44 @@ args = argparser.parse_args()
 #args.step_size_lr_decay = args.step_size_lr_decay
 #args.drop_factor_lr = args.drop_factor_lr
 #args.batch_size = args.args.batch_size
-#args.data_augmentation=args.data_augmentation
+#data_augmentation=args.data_augmentation
 #args.args.nb_epochs_training_per_cycle=args.args.nb_epochs_training_per_cycle
 #args.nb_epochs_training=args.args.nb_epochs_training_training
 #args.epochs_early_stop=args.epochs_args.epochs_early_stop
+import torch
+from profilehooks import profile
+from sklearn.metrics import mean_squared_error
+from math import sqrt
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim import lr_scheduler
+import torchvision
+from torchvision import datasets, models, data_augmentations
+import os, glob, time
+import copy
+import joblib, sys
+import numpy as np
+import scipy
+from scipy import stats
+from scipy import spatial
+import os,sys, os.path
+from collections import defaultdict
+import rdkit
+from rdkit import Chem
+from rdkit.Chem import AllChem
+import rdkit.rdBase
+from rdkit import DataStructs
+from rdkit.DataStructs import BitVectToText
+from rdkit import DataStructs
+from rdkit import Chem
+from rdkit.Chem.Draw import IPythonConsole
+from IPython.display import SVG
+import IPython
+#IPython.core.display.set_matplotlib_formats('svg')
+from IPython.core.display import SVG
+from torch.autograd import Variable
+import multiprocessing
+
 
 
 split_size = [0.7, 0.15, 0.15]
@@ -233,7 +233,7 @@ if not os.path.isfile(outsum):
     #-----------------------------------------------
     
     if args.data_augmentation == 1:
-        data_args.data_augmentations = {
+        transform = {
                 'train': args.data_augmentations.Compose([
                     args.data_augmentations.Resize(224),
                     args.data_augmentations.RandomHorizontalFlip(),
@@ -257,7 +257,7 @@ if not os.path.isfile(outsum):
                     ]),
                 }
     else:
-        data_args.data_augmentations = {
+        transform = {
                 'train': args.data_augmentations.Compose([
                     args.data_augmentations.Resize(224),
                     args.data_augmentations.ToTensor(),
@@ -308,20 +308,20 @@ if not os.path.isfile(outsum):
     ## use the custom functions to load the data
     trainloader = torch.utils.data.DataLoader(
                 ImageFilelist(paths_labels= paths_labels_train,
-                args.data_augmentation=data_args.data_augmentations['train']),
-                args.batch_size=args.batch_size, shuffle=shuffle,
+                transform=transforms['train']),
+                batch_size=args.batch_size, shuffle=shuffle,
                 num_workers=workers) 
     
     valloader = torch.utils.data.DataLoader(
                 ImageFilelist(paths_labels= paths_labels_val,
-                args.data_augmentation=data_args.data_augmentations['val']),
-                args.batch_size=args.batch_size, shuffle=shuffle,
+                data_augmentation=transform['val']),
+                batch_size=args.batch_size, shuffle=shuffle,
                 num_workers=workers) 
     
     testloader = torch.utils.data.DataLoader(
                 ImageFilelist(paths_labels= paths_labels_test,
-                args.data_augmentation=data_args.data_augmentations['test']),
-                args.batch_size=args.batch_size, shuffle=shuffle,
+                data_augmentation=transform['test']),
+                batch_size=args.batch_size, shuffle=shuffle,
                 num_workers=workers) 
     
     dataloaders = {'train': trainloader, 'val':valloader, 'test':testloader}
@@ -350,7 +350,7 @@ if not os.path.isfile(outsum):
             # cyclical learning rate
             if epoch % args.args.nb_epochs_training_per_cycle == 0:
                 optimizer = optim.SGD(model.parameters(), lr=args.lr)
-                scheduler = lr_scheduler.StepLR(optimizer, step_size=args.step_size_lr_decay, args.drop_factor_lr=args.drop_factor_lr)
+                scheduler = lr_scheduler.StepLR(optimizer, step_size=args.step_size_lr_decay, gamma=args.drop_factor_lr)
 
             print('Epoch {}/{} {}'.format(epoch, num_epochs - 1, early))
             print('-' * 10)
@@ -555,7 +555,7 @@ if not os.path.isfile(outsum):
         model_ft = model_ft.to(device)
     
     criterion = torch.nn.MSELoss()
-    exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=args.step_size_lr_decay, args.drop_factor_lr=args.drop_factor_lr)
+    exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=args.step_size_lr_decay, gamma=args.drop_factor_lr)
     
     
     #-----------------------------------------------
