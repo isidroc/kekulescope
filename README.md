@@ -19,6 +19,12 @@ torch==0.4.1.post2
 torchvision==0.2.1
 ```
 
+To install these libraries run:
+
+```
+pip install -r requirements.txt
+```
+
 # Running the code
 To obtain help on how to run the models run:
 ```
