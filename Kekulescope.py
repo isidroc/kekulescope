@@ -13,7 +13,7 @@ from __future__ import division, print_function
 #seed = args.seed
 
 from argparse import ArgumentParser
-cell_lines = ["KB","SK-OV-3","CCRF-CEM","LoVo","HCT-15","A2780","DU-145","PC-3","A549","K562","L1210","HL-60","MDA-MB-231","PC-3","HeLa","MCF7"]
+cell_lines = ["KB","SK-OV-3","CCRF-CEM","LoVo","HCT-15","A2780","DU-145","PC-3","K562","L1210","HL-60","MDA-MB-231","PC-3"]
 nets = ["alexnet", "vgg19_bn", "resnet152", "densenet201",  "resnet152_extended", "alexnet_extended", "densenet201_extended"]
 argparser = ArgumentParser()
 args_group = argparser.add_argument_group(title='Running args')
