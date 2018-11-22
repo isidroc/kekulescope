@@ -30,6 +30,7 @@ To obtain help on how to run the models run:
 ```
 python Kekulescope.py --help
 ```
+It is assumed that the user has access to at least 1 GPU card.
 
 # Contact
 Please contact Isidro Cortés Ciriano, PhD (isidrolauscher at gmail.com) for further information or suggestions.
