@@ -1,6 +1,6 @@
 # KekuleScope
 
-This repository contains the code and scripts to generate the compound activity prediction models reported in:
+This repository contains the 33 data sets, code and scripts needed to generate the compound activity prediction models reported in:
 
 _KekuleScope: improved prediction of cancer cell line sensitivity using convolutional neural networks trained on compound images_
 

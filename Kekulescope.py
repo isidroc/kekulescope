@@ -87,12 +87,12 @@ outsum="results/preds_{}_{}_{}_{}_{}_{}_{}_{}.txt".format(net,args.cell_line, ar
 print(outsum)
 if not os.path.isfile(outsum):
 
-    suppl = Chem.SDMolSupplier('datasets_cells/'+args.cell_line+'/'+args.cell_line+'.sdf')
+    suppl = Chem.SDMolSupplier('datasets/'+args.cell_line+'/'+args.cell_line+'.sdf')
     mols = [x for x in suppl if x is not None]
     my_smiles=[Chem.MolToSmiles(submol) for submol in mols]
     chembl_ids=[m.GetProp("ChEMBL_ID") for m in mols]
-    #activities =[float(m.GetProp("pIC50")) for m in mols]
-    activities = np.load("./datasets_cells/"+args.cell_line+"/"+args.cell_line+"_bios.npy")
+    activities =[float(m.GetProp("pIC50")) for m in mols]
+    #activities = np.load("./datasets/"+args.cell_line+"/"+args.cell_line+"_bios.npy")
     if(len(my_smiles) != len(activities)):
         raise "The number of compounds does not correspond to the number of bioactivities"
     
