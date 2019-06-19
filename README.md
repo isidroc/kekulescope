@@ -2,7 +2,10 @@
 
 This repository contains the 33 data sets, code and scripts needed to generate the compound activity prediction models reported in:
 
-_KekuleScope: improved prediction of cancer cell line sensitivity using convolutional neural networks trained on compound images_
+[_KekuleScope: prediction of cancer cell line sensitivity and compound potency using convolutional neural networks trained on compound images_](https://doi.org/10.1186/s13321-019-0364-5)
+
+Isidro Cortés-Ciriano and Andreas Bender
+Journal of Cheminformatics 2019 11:41
 
 # Dependencies
 KekuleScope depends on the following python libraries:
