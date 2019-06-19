@@ -5,7 +5,8 @@ This repository contains the 33 data sets, code and scripts needed to generate t
 [_KekuleScope: prediction of cancer cell line sensitivity and compound potency using convolutional neural networks trained on compound images_](https://doi.org/10.1186/s13321-019-0364-5)
 
 Isidro Cortés-Ciriano and Andreas Bender
-Journal of Cheminformatics 2019 11:41
+
+Journal of Cheminformatics, 2019, 11:41
 
 # Dependencies
 KekuleScope depends on the following python libraries:
