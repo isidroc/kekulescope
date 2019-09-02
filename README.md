@@ -38,3 +38,6 @@ It is assumed that the user has access to at least 1 GPU card.
 
 # Contact
 Please contact Isidro Cortés Ciriano, PhD (isidrolauscher at gmail.com) for further information or suggestions.
+
+# Funding
+This Project has received funding from the European Union’s Framework Programme For Research and Innovation Horizon 2020 (2014–2020) under the Marie Curie Sklodowska-Curie Grant Agreement No. 703543 (I.C.C.).
